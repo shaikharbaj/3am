@@ -21,13 +21,27 @@ export const Central3AMThoughtsHero: React.FC<Central3AMThoughtsHeroProps> = ({
   const [selectedMood, setSelectedMood] = useState<MidnightMood>('cozy');
   const [thoughtIndex, setThoughtIndex] = useState<number>(0);
   const [isSteamActive, setIsSteamActive] = useState<boolean>(true);
-  const [listeningCount, setListeningCount] = useState<number>(1428);
+  const [listeningCount, setListeningCount] = useState<number>(40);
 
   // Slowly simulate fluctuating night owl listener count
   useEffect(() => {
+    let direction = 1;
+
     const interval = setInterval(() => {
-      setListeningCount(prev => prev + (Math.random() > 0.5 ? 1 : -1));
-    }, 4000);
+      setListeningCount(prev => {
+        // Reverse direction at the limits
+        if (prev >= 57) direction = -1;
+        if (prev <= 20) direction = 1;
+
+        // Occasionally change direction randomly
+        if (Math.random() < 0.2) {
+          direction *= -1;
+        }
+
+        return prev + direction;
+      });
+    }, 5000);
+
     return () => clearInterval(interval);
   }, []);
 
@@ -61,7 +75,7 @@ export const Central3AMThoughtsHero: React.FC<Central3AMThoughtsHeroProps> = ({
     <div className="relative w-full max-w-5xl mx-auto my-6 px-2">
       {/* Outer Glow Container */}
       <div className="relative rounded-3xl bg-slate-950/85 border border-purple-500/30 backdrop-blur-2xl shadow-2xl shadow-purple-950/40 overflow-hidden transition-all duration-500">
-        
+
         {/* Top Decorative Sanctuary Bar */}
         <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-3.5 bg-slate-900/90 border-b border-slate-800">
           <div className="flex items-center space-x-2 text-xs font-mono-digital">
@@ -83,15 +97,15 @@ export const Central3AMThoughtsHero: React.FC<Central3AMThoughtsHeroProps> = ({
 
         {/* Main Hero Content Layout */}
         <div className="p-5 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-          
+
           {/* Left Visualizer: Spinning Vinyl & Audio Wave Animation (5 cols) */}
           <div className="lg:col-span-5 flex flex-col items-center justify-center p-6 rounded-2xl bg-gradient-to-b from-slate-900/80 to-slate-950/90 border border-purple-500/20 shadow-inner text-center relative group">
-            
+
             {/* Spinning Vinyl Record Player Visual */}
             <div className="relative w-44 h-44 sm:w-52 sm:h-52 my-2 flex items-center justify-center">
               {/* Outer Vinyl Glow Ring */}
               <div className={`absolute inset-0 rounded-full bg-gradient-to-tr from-purple-500/20 via-cyan-500/20 to-indigo-500/20 blur-xl transition-opacity duration-1000 ${isPlaying ? 'opacity-100 scale-105' : 'opacity-30'}`} />
-              
+
               {/* Vinyl Groove Disk */}
               <div className={`relative w-full h-full rounded-full bg-slate-950 border-4 border-slate-800 shadow-2xl flex items-center justify-center transition-transform duration-1000 ${isPlaying ? 'animate-spin-tape' : ''}`}>
                 {/* Vinyl Grooves Pattern */}
@@ -147,7 +161,7 @@ export const Central3AMThoughtsHero: React.FC<Central3AMThoughtsHeroProps> = ({
 
           {/* Right Content: 3 AM Thought Card & Mood Selector (7 cols) */}
           <div className="lg:col-span-7 flex flex-col justify-between space-y-6">
-            
+
             {/* Mood Category Badges */}
             <div>
               <div className="flex items-center space-x-2 mb-3">
@@ -165,11 +179,10 @@ export const Central3AMThoughtsHero: React.FC<Central3AMThoughtsHeroProps> = ({
                       soundFx.playKeyClick();
                       setSelectedMood(m.id);
                     }}
-                    className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-mono-digital transition-all ${
-                      selectedMood === m.id
-                        ? 'bg-purple-950 border border-purple-400 text-purple-200 font-semibold shadow-md shadow-purple-950'
-                        : 'bg-slate-900/80 border border-slate-800 text-slate-400 hover:text-slate-200'
-                    }`}
+                    className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-mono-digital transition-all ${selectedMood === m.id
+                      ? 'bg-purple-950 border border-purple-400 text-purple-200 font-semibold shadow-md shadow-purple-950'
+                      : 'bg-slate-900/80 border border-slate-800 text-slate-400 hover:text-slate-200'
+                      }`}
                   >
                     <span>{m.icon}</span>
                     <span>{m.label}</span>
