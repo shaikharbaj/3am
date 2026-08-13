@@ -1,0 +1,6 @@
+{
+  "name": "3:00 AM Thoughts",
+  "description": "An aesthetic late-night music player and atmospheric sanctuary for those awake at 3 AM — overthinking, dreaming, and finding quiet peace in the rain, snow, or clear night.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
