@@ -13,14 +13,33 @@ export const SubmitToAdminPage: React.FC<SubmitToAdminPageProps> = ({ onBackToRa
   const [showThankYouAlert, setShowThankYouAlert] = useState<boolean>(false);
   const [submittedName, setSubmittedName] = useState<string>('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [errorMessage, setErrorMessage] = useState<string>('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!songRecommendation.trim()) return;
 
     soundFx.playKeyClick();
     setIsSubmitting(true);
+    setErrorMessage('');
 
-    setTimeout(() => {
+    try {
+      const response = await fetch('https://3am-admin-api.vercel.app/api/recommendations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nickname: nickname.trim() || 'Night Owl',
+          recommendation: songRecommendation.trim(),
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        throw new Error(errorData?.message || `Failed to submit (${response.status})`);
+      }
+
       soundFx.playSuccessSound();
       setSubmittedName(nickname.trim() || 'Night Owl');
       setIsSubmitting(false);
@@ -29,7 +48,10 @@ export const SubmitToAdminPage: React.FC<SubmitToAdminPageProps> = ({ onBackToRa
       // Reset form fields
       setNickname('');
       setSongRecommendation('');
-    }, 800);
+    } catch (error: any) {
+      setIsSubmitting(false);
+      setErrorMessage(error.message || 'Something went wrong. Please try again.');
+    }
   };
 
   return (
@@ -151,6 +173,13 @@ export const SubmitToAdminPage: React.FC<SubmitToAdminPageProps> = ({ onBackToRa
               </>
             )}
           </button>
+
+          {/* Error Message */}
+          {errorMessage && (
+            <div className="p-3 rounded-xl bg-rose-950/50 border border-rose-500/30 text-center text-xs font-mono-digital text-rose-300 flex items-center justify-center space-x-2">
+              <span>⚠️ {errorMessage}</span>
+            </div>
+          )}
         </form>
 
         {/* Funny Notice at the Bottom as requested */}
