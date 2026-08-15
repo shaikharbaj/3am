@@ -3,11 +3,11 @@ import { Track, LateNightThought } from '../types';
 export const TRACKS: Track[] = [
   {
     id: 'track-1',
-    youtubeId: '5GCfYLguTIs',
-    title: 'BOYFRIEND(MUSIC VIDEO) KARAN AUJLA',
-    artist: 'KARAN AUJLA',
-    duration: '2:41:00',
-    durationSeconds: 9660,
+    youtubeId: 'uue4MyYaFps',
+    title: 'Main Koi Aisa Geet Gaoon',
+    artist: 'Abhijeet Bhattacharya, Alka Yagnik',
+    duration: '5:06:00',
+    durationSeconds: 18360,
     moodTag: 'Quiet Nostalgia',
     quoteSnippet: 'When the world is fast asleep, your mind wanders furthest.',
   },
