@@ -194,7 +194,7 @@ export const GlassMusicPlayer: React.FC<GlassMusicPlayerProps> = ({
           <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-800">
             <div className="flex items-center space-x-2">
               <ListMusic className="w-4 h-4 text-cyan-400" />
-              <h4 className="font-bold text-xs text-slate-100">3 AM Developer Playlist</h4>
+              <h4 className="font-bold text-xs text-slate-100">3 AM Playlist</h4>
             </div>
             <button
               onClick={() => setShowPlaylist(false)}
@@ -213,11 +213,10 @@ export const GlassMusicPlayer: React.FC<GlassMusicPlayerProps> = ({
                   onSelectTrack(idx);
                   setShowPlaylist(false);
                 }}
-                className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left text-xs transition ${
-                  idx === currentTrackIndex
-                    ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-semibold'
-                    : 'text-slate-300 hover:bg-slate-800/80'
-                }`}
+                className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left text-xs transition ${idx === currentTrackIndex
+                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-semibold'
+                  : 'text-slate-300 hover:bg-slate-800/80'
+                  }`}
               >
                 <div className="flex items-center space-x-2 truncate pr-2">
                   <span className="text-slate-500 w-4">{idx + 1}.</span>
@@ -233,7 +232,7 @@ export const GlassMusicPlayer: React.FC<GlassMusicPlayerProps> = ({
       {/* Main IDE Glassmorphism Player Bar */}
       <div className="fixed bottom-0 left-0 right-0 z-50 p-2 sm:p-4 pointer-events-none pb-[calc(0.5rem+env(safe-area-inset-bottom,0px))]">
         <div className="max-w-4xl mx-auto bg-slate-950/95 backdrop-blur-2xl border border-slate-800/90 rounded-2xl p-2.5 sm:p-4 shadow-2xl shadow-black pointer-events-auto flex flex-col gap-1.5 sm:gap-2">
-          
+
           {/* Progress Bar */}
           <div className="flex items-center space-x-2 sm:space-x-3 text-[10px] sm:text-xs font-mono-digital text-slate-400 px-1">
             <span>{formatTime(currentTime)}</span>
@@ -313,9 +312,8 @@ export const GlassMusicPlayer: React.FC<GlassMusicPlayerProps> = ({
 
               <button
                 onClick={() => { soundFx.playKeyClick(); setShowPlaylist(!showPlaylist); }}
-                className={`flex items-center space-x-1 px-2 sm:px-3 py-1.5 rounded-xl border text-xs font-mono-digital transition ${
-                  showPlaylist ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/50' : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:border-slate-600'
-                }`}
+                className={`flex items-center space-x-1 px-2 sm:px-3 py-1.5 rounded-xl border text-xs font-mono-digital transition ${showPlaylist ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/50' : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:border-slate-600'
+                  }`}
               >
                 <ListMusic className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400" />
                 <span className="hidden sm:inline">Playlist</span>
